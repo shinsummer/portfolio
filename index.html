@@ -67,6 +67,7 @@ nav.menu a[aria-current="page"]{color:var(--accent);border-color:var(--accent)}
 .view.on{display:block}
 .head{text-align:center;padding:56px 0 64px}
 .eyebrow{color:var(--accent);font-weight:500;font-size:15px}
+.eyebrow-lg{font-size:26px}
 .head h1{font-size:clamp(30px,4.2vw,42px);font-weight:700;margin-top:18px;letter-spacing:-.035em}
 .head p{color:var(--muted);margin:16px auto 0;max-width:56ch}
 
@@ -244,7 +245,7 @@ footer.site b{display:block;color:var(--accent);font-size:18px;font-weight:800;m
   <!-- ===== 홈 ===== -->
   <section class="view" id="v-home">
     <div class="head">
-      <div class="eyebrow">HR · 조직문화 · 총무</div>
+      <div class="eyebrow eyebrow-lg">HR</div>
       <h1>준비된 인재 신수경의<br>역량을 소개합니다.</h1>
     </div>
 
@@ -324,14 +325,14 @@ footer.site b{display:block;color:var(--accent);font-size:18px;font-weight:800;m
   if(!reduce&&typeof confetti==='function'){
     var opt={zIndex:60,colors:['#F7323F','#141414','#ff9aa2','#ffd166','#ffffff'],disableForReducedMotion:true};
     confetti(Object.assign({particleCount:120,spread:90,startVelocity:55,origin:{y:.65}},opt));
-    var end=Date.now()+1600;
+    var end=Date.now()+1000;
     (function frame(){
       confetti(Object.assign({particleCount:4,angle:60,spread:60,origin:{x:0,y:.7}},opt));
       confetti(Object.assign({particleCount:4,angle:120,spread:60,origin:{x:1,y:.7}},opt));
       if(Date.now()<end&&!done)requestAnimationFrame(frame);
     })();
   }
-  setTimeout(close,reduce?1500:2800);
+  setTimeout(close,reduce?1000:1800);
 })();
 
 /* 화면 전환: 처음 화면 #home, 프로젝트 하나씩 #p-…, 연락처 #contact */
