@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>신수경 포트폴리오</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+/* 레이아웃 아이디어: 가운데 큰 제목 + 4열로 엇갈려 쌓인 빨강·검정 카드 → 카드를 누르면 그 프로젝트 하나만 보여 주는 상세 화면 */
+:root{
+  --bg:#f6f6f7;
+  --surface:#ffffff;
+  --ink:#141414;
+  --muted:#6e6e73;
+  --line:#e4e4e7;
+  --accent:#F7323F;   /* Yeogi Red */
+  --card-a:#F7323F;   /* 빨간 카드 */
+  --card-b:#141414;   /* 검정 카드 */
+  --accent-soft:#ffecee;
+  --placeholder:#b4520f;
+  --placeholder-bg:#fdf1e6;
+  --font:"Noto Sans KR",-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --display:"Jalnan","Noto Sans KR",sans-serif;
+  color-scheme:light;
+}
+@font-face{font-family:"Jalnan";src:url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.0/JalnanOTF00.woff") format("woff");font-weight:400;font-style:normal;font-display:swap}
+h1,h2,h3,.brand b,.kpi .num,.intro h2,footer.site b,.qa .q span,.more-btn a,.eyebrow{font-family:var(--display);font-weight:400!important;letter-spacing:0!important}
+*{box-sizing:border-box}
+html,body{margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased;letter-spacing:-.01em}
+h1,h2,h3{margin:0;line-height:1.3;text-wrap:balance}
+a{color:inherit}
+a:focus-visible,button:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:8px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+.ph{background:var(--placeholder-bg);color:var(--placeholder);border-radius:4px;padding:0 4px}
+.card .ph{background:rgba(255,255,255,.2);color:#fff}
+body.clean .ph{background:transparent!important;color:inherit!important;padding:0}
+body.clean .notice{display:none}
+
+/* 안내 띠 */
+.notice{background:var(--placeholder-bg);color:var(--placeholder);font-size:13px;padding:8px 0}
+.notice .wrap{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+.notice button{font:inherit;font-size:12px;border:1px solid currentColor;background:transparent;color:inherit;border-radius:999px;padding:2px 10px;cursor:pointer}
+
+/* 헤더 */
+header.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(10px)}
+header.top .wrap{display:flex;align-items:center;height:88px}
+.brand{display:flex;align-items:center;gap:14px;text-decoration:none}
+.brand b{font-size:21px;font-weight:800;color:var(--accent);letter-spacing:-.03em}
+.pill{display:inline-flex;background:#e2e5ee;border-radius:999px;padding:3px;font-size:13px}
+.pill span{padding:4px 12px;border-radius:999px;color:var(--muted)}
+.pill span.on{background:var(--accent);color:#fff;font-weight:500}
+nav.menu{display:flex;gap:40px}
+nav.menu a{text-decoration:none;font-size:15.5px;font-weight:500;padding:6px 0;border-bottom:2px solid transparent}
+nav.menu a:hover{color:var(--accent)}
+nav.menu a[aria-current="page"]{color:var(--accent);border-color:var(--accent)}
+.top-right{justify-self:end;display:flex;gap:8px;align-items:center}
+.top-right a{font-size:13px;text-decoration:none;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 14px}
+.crumb{display:flex;justify-content:flex-end;gap:6px;font-size:12px;color:var(--muted);padding-top:4px}
+.crumb b{color:var(--ink);font-weight:500}
+
+/* 공통 페이지 머리 */
+.view{display:none}
+.view.on{display:block}
+.head{text-align:center;padding:56px 0 64px}
+.eyebrow{color:var(--accent);font-weight:500;font-size:15px}
+.head h1{font-size:clamp(30px,4.2vw,42px);font-weight:700;margin-top:18px;letter-spacing:-.035em}
+.head p{color:var(--muted);margin:16px auto 0;max-width:56ch}
+
+/* 홈 카드 */
+.cards{display:grid;grid-template-columns:repeat(4,220px);gap:16px;justify-content:center}
+.col{display:flex;flex-direction:column;gap:16px}
+.col.off{padding-top:104px}
+.card{position:relative;display:block;height:236px;border-radius:22px;padding:30px 26px;color:#fff;text-decoration:none;overflow:hidden;transition:transform .25s ease,box-shadow .25s ease,background-color .25s ease}
+.card.l{background:var(--card-a)}
+.card.d{background:var(--card-b)}
+.card .sub{font-size:13px;line-height:1.5;font-weight:500}
+.card h3{font-size:22px;margin-top:8px;line-height:1.35;word-break:keep-all;text-wrap:wrap}
+.card .ico{position:absolute;right:24px;bottom:20px;font-size:62px;line-height:1;filter:drop-shadow(0 8px 10px rgba(0,0,0,.22));transition:opacity .2s,transform .25s}
+.card ul{margin:12px 0 0;padding:0;list-style:none;font-size:12px;line-height:1.75;opacity:0;transform:translateY(6px);transition:opacity .2s,transform .25s}
+.card ul li::before{content:"·";margin-right:6px}
+.card .arrow{position:absolute;right:24px;bottom:22px;font-size:22px;opacity:0;transition:opacity .2s}
+.card:hover,.card:focus-visible{transform:translateY(-4px) scale(1.03);box-shadow:0 18px 36px -14px rgba(247,50,63,.5)}
+.card.l:hover,.card.l:focus-visible{background:var(--card-b)}
+.card.d:hover,.card.d:focus-visible{background:var(--card-a)}
+.card:hover .ico,.card:focus-visible .ico{opacity:0;transform:scale(.8)}
+.card:hover ul,.card:focus-visible ul{opacity:1;transform:none}
+.card:hover .arrow,.card:focus-visible .arrow{opacity:1}
+.more-btn{display:flex;justify-content:center;padding:100px 0 40px}
+.more-btn a{background:#dfe2ea;border-radius:10px;padding:12px 22px;font-size:14px;text-decoration:none}
+.more-btn a:hover{background:#d2d6e1}
+
+/* 경력 */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;max-width:928px;margin:0 auto}
+.kpi{background:var(--surface);border-radius:18px;padding:22px}
+.kpi .num{font-size:32px;font-weight:800;color:var(--accent);font-variant-numeric:tabular-nums;letter-spacing:-.03em}
+.kpi .num small{font-size:15px;color:var(--muted);font-weight:500;margin-left:2px}
+.kpi .lbl{font-size:14px}
+.kpi .src{font-size:12px;color:var(--muted);margin-top:6px}
+.panel{max-width:928px;margin:16px auto 0;background:var(--surface);border-radius:22px;padding:32px 36px}
+.panel h2{font-size:20px;margin-bottom:8px}
+.t-item{display:grid;grid-template-columns:170px 1fr;gap:20px;padding:20px 0;border-top:1px solid var(--line)}
+.t-item:first-of-type{border-top:0}
+.t-date{color:var(--muted);font-size:14px;font-variant-numeric:tabular-nums}
+.t-item h3{font-size:17px}
+.t-item ul{margin:8px 0 0;padding-left:18px;color:var(--muted);font-size:14.5px}
+.skills{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:8px}
+.skill{background:var(--accent-soft);border-radius:16px;padding:18px 20px}
+.skill h3{font-size:16px;color:var(--accent)}
+.skill ul{margin:8px 0 0;padding-left:18px;font-size:14px}
+.tools{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.tools span{border:1px solid var(--line);border-radius:999px;padding:5px 14px;font-size:14px}
+
+/* 자기소개서 */
+.qa{max-width:760px;margin:0 auto;display:grid;gap:16px}
+.qa article{background:var(--surface);border-radius:22px;padding:30px 34px}
+.qa .q{display:flex;gap:12px;align-items:baseline}
+.qa .q span{color:var(--accent);font-weight:800;font-size:14px}
+.qa h2{font-size:20px}
+.qa p{margin:12px 0 0;color:#3b3f4c;max-width:65ch}
+
+/* 포트폴리오 */
+.plist{max-width:928px;margin:0 auto;display:grid;gap:16px}
+.proj{background:var(--surface);border-radius:22px;padding:24px;display:grid;grid-template-columns:260px 1fr;gap:28px;scroll-margin-top:110px}
+.proj:target{box-shadow:0 0 0 3px var(--accent)}
+.thumb{border-radius:16px;min-height:180px;display:grid;place-items:center;font-size:64px;color:#fff;position:relative}
+.thumb.l{background:var(--card-a)}
+.thumb.d{background:var(--card-b)}
+.thumb small{position:absolute;bottom:12px;font-size:12px;opacity:.85}
+.proj .meta{font-size:13px;color:var(--muted)}
+.proj h3{font-size:21px;margin-top:2px}
+.star{display:grid;gap:8px;margin-top:14px;font-size:14.5px}
+.star div{display:grid;grid-template-columns:52px 1fr;gap:8px}
+.star b{color:var(--accent);font-weight:700}
+.result{margin-top:14px;display:flex;flex-wrap:wrap;gap:8px}
+.result span{background:var(--accent-soft);color:var(--accent);border-radius:8px;padding:4px 10px;font-size:13px;font-weight:500}
+
+/* 프로젝트 상세(한 개씩) */
+.pbar{max-width:928px;margin:40px auto 24px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.pbar a{text-decoration:none;font-size:14px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:7px 16px}
+.pbar a:hover{border-color:var(--accent);color:var(--accent)}
+.pbar .count{font-family:var(--display);color:var(--accent);font-size:15px}
+.pbar .pn{display:flex;gap:8px}
+.proj[hidden]{display:none}
+.plist .proj{grid-template-columns:1fr;padding:32px}
+.plist .thumb{min-height:320px;font-size:110px}
+.plist .proj h3{font-size:30px;margin-top:6px}
+.plist .star{font-size:16px;gap:12px;margin-top:20px}
+.plist .star div{grid-template-columns:64px 1fr}
+.proj:target{box-shadow:none}
+
+.credit{text-align:center;font-size:12px;color:var(--muted);margin:96px 0 32px}
+
+.card h3.big{font-size:38px;line-height:1.15;margin-top:10px}
+.proj h3 .pre{display:block;font-family:var(--font);font-size:16px;font-weight:500;color:var(--muted);margin-bottom:4px}
+.plist .proj h3:has(.pre){font-size:44px}
+
+/* Contact */
+.contact-grid{max-width:620px;margin:0 auto;display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.c-card{border-radius:22px;padding:30px 26px;color:#fff;min-height:200px;display:flex;flex-direction:column;gap:6px}
+.c-card.l{background:var(--card-a)}
+.c-card.d{background:var(--card-b)}
+.c-card .sub{font-size:13px;opacity:.9}
+.c-card .val{font-size:18px;font-weight:700;word-break:break-all}
+.c-card button{margin-top:auto;align-self:flex-start;font:inherit;font-size:13px;border:1px solid rgba(255,255,255,.6);background:transparent;color:#fff;border-radius:999px;padding:5px 14px;cursor:pointer}
+.c-card .ph{background:rgba(255,255,255,.2);color:#fff}
+
+/* 푸터 */
+footer.site{margin-top:120px;border-top:1px solid var(--line);padding:28px 0 40px;font-size:12.5px;color:var(--muted)}
+footer.site .row{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:center}
+footer.site nav{display:flex;gap:18px;flex-wrap:wrap}
+footer.site nav a{text-decoration:none}
+footer.site b{display:block;color:var(--accent);font-size:18px;font-weight:800;margin:24px 0 6px}
+.topbtn{background:#2a2d36;color:#fff;border:0;border-radius:8px;padding:8px 14px;font:inherit;font-size:12px;cursor:pointer}
+
+/* 입장 축하 화면 */
+.intro{position:fixed;inset:0;z-index:50;display:grid;place-items:center;background:var(--bg);text-align:center;padding:24px;cursor:pointer;transition:opacity .6s ease,visibility .6s}
+.intro.out{opacity:0;visibility:hidden}
+.intro .inner{display:grid;gap:14px;justify-items:center;animation:pop .7s cubic-bezier(.2,1.4,.4,1) both}
+.intro .badge{font-size:13px;letter-spacing:.08em;color:var(--accent);background:var(--accent-soft);padding:4px 12px;border-radius:999px;font-weight:700}
+.intro h2{font-size:clamp(28px,5vw,48px);font-weight:800;letter-spacing:-.03em}
+.intro h2 em{font-style:normal;color:var(--accent)}
+.intro p{margin:0;color:var(--muted);font-size:14px}
+@keyframes pop{from{transform:scale(.85);opacity:0}to{transform:scale(1);opacity:1}}
+
+@media (max-width:980px){
+  header.top .wrap{grid-template-columns:1fr auto;height:auto;padding-top:14px;padding-bottom:10px}
+  nav.menu{grid-column:1/-1;order:3;gap:24px;overflow-x:auto}
+  .cards{grid-template-columns:repeat(2,minmax(0,260px))}
+  .col.off{padding-top:0}
+  .kpis,.contact-grid{grid-template-columns:repeat(2,1fr)}
+  .proj{grid-template-columns:1fr}
+}
+@media (max-width:560px){
+  .wrap{padding:0 16px}
+  .pill{display:none}
+  .cards{grid-template-columns:1fr}
+  .card{height:auto;min-height:190px}
+  .kpis,.contact-grid,.skills{grid-template-columns:1fr}
+  .panel,.qa article{padding:24px 20px}
+  .t-item{grid-template-columns:1fr;gap:4px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{transition:none!important}
+  .intro .inner{animation:none}
+}
+</style>
+</head>
+<body>
+
+<!-- 입장 축하 화면: 사이트를 열면 컨페티와 함께 약 2.8초 보이고 사라집니다. 클릭하면 바로 넘어갑니다 -->
+<div class="intro" id="intro" role="dialog" aria-label="환영 인사">
+  <div class="inner">
+    <span class="badge">TALENT FOUND</span>
+    <h2>🎉 <em>인재</em>를 발견하신 걸<br>축하드립니다!</h2>
+    <p>잠시 후 포트폴리오로 이동합니다 · 클릭하면 바로 이동</p>
+  </div>
+</div>
+
+<!-- 안내 띠: 내용을 다 채운 뒤 이 div 를 지우세요 -->
+<div class="notice"><div class="wrap">
+  <span>주황색 표시 부분이 채워 넣을 자리입니다.</span>
+  <button type="button" id="toggleClean">표시 숨기고 미리보기</button>
+</div></div>
+
+<header class="top"><div class="wrap">
+  <a class="brand" href="#home"><b>신수경</b><span class="pill"><span>HR Manager</span><span class="on">Portfolio</span></span></a>
+</div></header>
+
+<main class="wrap">
+
+  <!-- ===== 홈 ===== -->
+  <section class="view" id="v-home">
+    <div class="head">
+      <div class="eyebrow">HR · 조직문화 · 총무</div>
+      <h1>준비된 인재 신수경의<br>역량을 소개합니다.</h1>
+    </div>
+
+    <!-- 카드 한 장 = 프로젝트 맛보기. href 의 #p-… 는 포트폴리오 페이지의 같은 id 로 이동합니다 -->
+    <div class="cards">
+      <div class="col">
+        <a class="card l" href="#p-dashboard"><div class="sub">구성원 현황을 한눈에 보는</div><h3>HR 대시보드 구축</h3><ul><li><span class="ph">핵심 성과 1</span></li><li><span class="ph">핵심 성과 2</span></li></ul><span class="ico" aria-hidden="true">📊</span><span class="arrow" aria-hidden="true">→</span></a>
+        <a class="card d" href="#p-workshop"><div class="sub">전사 행사의 비용 대비 효과를 분석한</div><h3>워크샵 임팩트<br>리포트</h3><ul><li><span class="ph">핵심 성과 1</span></li><li><span class="ph">핵심 성과 2</span></li></ul><span class="ico" aria-hidden="true">📈</span><span class="arrow" aria-hidden="true">→</span></a>
+        <a class="card l" href="#p-party"><div class="sub">구성원이 함께 즐기는</div><h3>2026 송년회 운영 및 기획</h3><ul><li><span class="ph">핵심 성과 1</span></li><li><span class="ph">핵심 성과 2</span></li></ul><span class="ico" aria-hidden="true">🎄</span><span class="arrow" aria-hidden="true">→</span></a>
+      </div>
+      <div class="col off">
+        <a class="card d" href="#p-office"><div class="sub">4개의 오피스와 400개의 전산을<br>안정적으로 관리하는</div><h3 class="big">Manager</h3><ul><li><span class="ph">핵심 성과 1</span></li><li><span class="ph">핵심 성과 2</span></li></ul><span class="ico" aria-hidden="true">🏢</span><span class="arrow" aria-hidden="true">→</span></a>
+        <a class="card l" href="#p-ai"><div class="sub">업무 생산성을 높이는</div><h3>AI 툴 활용 가이드</h3><ul><li><span class="ph">핵심 성과 1</span></li><li><span class="ph">핵심 성과 2</span></li></ul><span class="ico" aria-hidden="true">🤖</span><span class="arrow" aria-hidden="true">→</span></a>
+      </div>
+      <div class="col">
+        <a class="card l" href="#p-bench"><div class="sub">업계 인원·조직을 비교 분석한</div><h3>뷰티 업계 벤치마크</h3><ul><li><span class="ph">핵심 성과 1</span></li><li><span class="ph">핵심 성과 2</span></li></ul><span class="ico" aria-hidden="true">🔍</span><span class="arrow" aria-hidden="true">→</span></a>
+        <a class="card d" href="#p-culture"><div class="sub">구성원의 목소리를 반영하는</div><h3>조직문화 프로그램 기획 및 운영</h3><ul><li><span class="ph">핵심 성과 1</span></li><li><span class="ph">핵심 성과 2</span></li></ul><span class="ico" aria-hidden="true">💬</span><span class="arrow" aria-hidden="true">→</span></a>
+      </div>
+      <div class="col off">
+        <a class="card d" href="#p-map"><div class="sub">점심 고민을 덜어 주는 사내 서비스</div><h3>강남 맛지도 앱<br>개발</h3><ul><li><span class="ph">핵심 성과 1</span></li><li><span class="ph">핵심 성과 2</span></li></ul><span class="ico" aria-hidden="true">🗺️</span><span class="arrow" aria-hidden="true">→</span></a>
+        <a class="card l" href="#contact"><div class="sub">함께 일할 기회를 기다리는</div><h3>Contact</h3><ul><li>이메일</li><li>링크드인</li></ul><span class="ico" aria-hidden="true">📮</span><span class="arrow" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ===== 포트폴리오 ===== -->
+  <section class="view" id="v-portfolio">
+    <div class="pbar">
+      <a href="#home" class="back">← 처음으로</a>
+      <span class="count" id="pCount"></span>
+      <span class="pn"><a href="#home" id="pPrev">← 이전</a><a href="#home" id="pNext">다음 →</a></span>
+    </div>
+    <div class="plist">
+      <article class="proj" id="p-dashboard"><div class="thumb l">📊<small>캡처 이미지 자리</small></div><div><div class="meta"><span class="ph">2026.00 · 기획·제작</span></div><h3>HR 대시보드 구축</h3><div class="star"><div><b>문제</b><span class="ph">상황과 문제</span></div><div><b>한 일</b><span class="ph">내가 직접 한 일</span></div><div><b>결과</b><span class="ph">달라진 점</span></div></div><div class="result"><span class="ph">성과 수치</span><span class="ph">링크</span></div></div></article>
+      <article class="proj" id="p-workshop"><div class="thumb d">📈<small>캡처 이미지 자리</small></div><div><div class="meta"><span class="ph">2026.00 · 분석·보고</span></div><h3>워크샵 임팩트 리포트</h3><div class="star"><div><b>문제</b><span class="ph">상황과 문제</span></div><div><b>한 일</b><span class="ph">내가 직접 한 일</span></div><div><b>결과</b><span class="ph">달라진 점</span></div></div><div class="result"><span class="ph">성과 수치</span></div></div></article>
+      <article class="proj" id="p-party"><div class="thumb l">🎄<small>캡처 이미지 자리</small></div><div><div class="meta"><span class="ph">2026.12 · 기획·운영</span></div><h3>2026 송년회 운영 및 기획</h3><div class="star"><div><b>문제</b><span class="ph">상황과 문제</span></div><div><b>한 일</b><span class="ph">내가 직접 한 일</span></div><div><b>결과</b><span class="ph">달라진 점</span></div></div><div class="result"><span class="ph">성과 수치</span></div></div></article>
+      <article class="proj" id="p-office"><div class="thumb d">🏢<small>캡처 이미지 자리</small></div><div><div class="meta"><span class="ph">기간 · 담당</span></div><h3><span class="pre">4개의 오피스와 400개의 전산을 안정적으로 관리하는</span>Manager</h3><div class="star"><div><b>문제</b><span class="ph">상황과 문제</span></div><div><b>한 일</b><span class="ph">내가 직접 한 일</span></div><div><b>결과</b><span class="ph">달라진 점</span></div></div><div class="result"><span class="ph">성과 수치</span></div></div></article>
+      <article class="proj" id="p-ai"><div class="thumb l">🤖<small>캡처 이미지 자리</small></div><div><div class="meta"><span class="ph">2026.00 · 정책 수립</span></div><h3>AI 툴 활용 가이드</h3><div class="star"><div><b>문제</b><span class="ph">상황과 문제</span></div><div><b>한 일</b><span class="ph">내가 직접 한 일</span></div><div><b>결과</b><span class="ph">달라진 점</span></div></div><div class="result"><span class="ph">성과 수치</span></div></div></article>
+      <article class="proj" id="p-bench"><div class="thumb l">🔍<small>캡처 이미지 자리</small></div><div><div class="meta"><span class="ph">2026.00 · 조사·분석</span></div><h3>뷰티 업계 벤치마크</h3><div class="star"><div><b>문제</b><span class="ph">상황과 문제</span></div><div><b>한 일</b><span class="ph">내가 직접 한 일</span></div><div><b>결과</b><span class="ph">달라진 점</span></div></div><div class="result"><span class="ph">성과 수치</span></div></div></article>
+      <article class="proj" id="p-culture"><div class="thumb d">💬<small>캡처 이미지 자리</small></div><div><div class="meta"><span class="ph">기간 · 담당</span></div><h3>조직문화 프로그램 기획 및 운영</h3><div class="star"><div><b>문제</b><span class="ph">상황과 문제</span></div><div><b>한 일</b><span class="ph">내가 직접 한 일</span></div><div><b>결과</b><span class="ph">달라진 점</span></div></div><div class="result"><span class="ph">성과 수치</span></div></div></article>
+      <article class="proj" id="p-map"><div class="thumb d">🗺️<small>캡처 이미지 자리</small></div><div><div class="meta"><span class="ph">2026.00 · 기획·제작</span></div><h3>강남 맛지도 앱 개발</h3><div class="star"><div><b>문제</b><span class="ph">상황과 문제</span></div><div><b>한 일</b><span class="ph">내가 직접 한 일</span></div><div><b>결과</b><span class="ph">달라진 점</span></div></div><div class="result"><span class="ph">성과 수치</span></div></div></article>
+    </div>
+  </section>
+
+  <!-- ===== Contact ===== -->
+  <section class="view" id="v-contact">
+    <div class="pbar"><a href="#home" class="back">← 처음으로</a></div>
+    <div class="head">
+      <div class="eyebrow">Contact</div>
+      <h1>함께 일할 기회를<br>기다리고 있습니다.</h1>
+    </div>
+    <!-- 공개해도 되는 연락처만 넣으세요 -->
+    <div class="contact-grid">
+      <div class="c-card d"><div class="sub">이메일</div><div class="val" id="email">syn00428@naver.com</div><button type="button" class="copy" data-target="email">주소 복사</button></div>
+      <div class="c-card l"><div class="sub">링크드인</div><div class="val"><span class="ph">링크 준비 중</span></div></div>
+    </div>
+  </section>
+
+  <p class="credit">이 사이트에는 ㈜여기어때컴퍼니가 제공한 여기어때 잘난체가 적용되어 있습니다.</p>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/canvas-confetti/1.9.3/confetti.browser.min.js"></script>
+<script>
+/* 입장 축하 + 컨페티 */
+(function(){
+  var intro=document.getElementById('intro');
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var done=false;
+  function close(){
+    if(done)return; done=true;
+    intro.classList.add('out');
+    setTimeout(function(){intro.remove()},700);
+  }
+  intro.addEventListener('click',close);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'||e.key==='Enter')close()});
+  if(!reduce&&typeof confetti==='function'){
+    var opt={zIndex:60,colors:['#F7323F','#141414','#ff9aa2','#ffd166','#ffffff'],disableForReducedMotion:true};
+    confetti(Object.assign({particleCount:120,spread:90,startVelocity:55,origin:{y:.65}},opt));
+    var end=Date.now()+1600;
+    (function frame(){
+      confetti(Object.assign({particleCount:4,angle:60,spread:60,origin:{x:0,y:.7}},opt));
+      confetti(Object.assign({particleCount:4,angle:120,spread:60,origin:{x:1,y:.7}},opt));
+      if(Date.now()<end&&!done)requestAnimationFrame(frame);
+    })();
+  }
+  setTimeout(close,reduce?1500:2800);
+})();
+
+/* 화면 전환: 처음 화면 #home, 프로젝트 하나씩 #p-…, 연락처 #contact */
+(function(){
+  var projs=[].slice.call(document.querySelectorAll('.proj'));
+  function route(){
+    var h=location.hash.replace('#','');
+    var view='home', crumb='';
+    if(h.indexOf('p-')===0&&document.getElementById(h)){
+      view='portfolio';
+      var idx=0;
+      projs.forEach(function(p,k){var on=p.id===h;p.hidden=!on;if(on)idx=k});
+      crumb=projs[idx].querySelector('h3').textContent;
+      document.getElementById('pCount').textContent=String(idx+1).padStart(2,'0')+' / '+String(projs.length).padStart(2,'0');
+      document.getElementById('pPrev').href='#'+projs[(idx-1+projs.length)%projs.length].id;
+      document.getElementById('pNext').href='#'+projs[(idx+1)%projs.length].id;
+    }else if(h==='contact'){view='contact';crumb='Contact'}
+    document.querySelectorAll('.view').forEach(function(v){v.classList.toggle('on',v.id==='v-'+view)});
+    window.scrollTo(0,0);
+  }
+  window.addEventListener('hashchange',route);
+  route();
+  document.getElementById('toggleClean').addEventListener('click',function(){document.body.classList.add('clean')});
+  document.querySelectorAll('.copy').forEach(function(btn){
+    var label=btn.textContent;
+    btn.addEventListener('click',function(){
+      var t=document.getElementById(btn.getAttribute('data-target')).textContent.trim();
+      function show(m){btn.textContent=m;setTimeout(function(){btn.textContent=label},1500)}
+      try{navigator.clipboard.writeText(t).then(function(){show('복사됨')},function(){show('복사 안 됨')})}catch(e){show('복사 안 됨')}
+    });
+  });
+})();
+</script>
+</body>
+</html>
